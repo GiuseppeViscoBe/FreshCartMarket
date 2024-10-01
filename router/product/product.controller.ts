@@ -1,19 +1,19 @@
 import { Request, Response, NextFunction } from "express";
+import Product from "../../models/product.model";
 
-
-const getAvailableProducts = async (req : Request, res : Response, next : NextFunction) =>  {
-
-
-    res.status(200).json({
-        name : 'iphone',
-        image : 'urlImage',
-        price : 10,
-        availableQuantity : 100,
-        category : 'electronics'
-    })
-}
-
+const getAvailableProducts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const result = await Product.find({});
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export default {
-    getAvailableProducts
-}
+  getAvailableProducts,
+};

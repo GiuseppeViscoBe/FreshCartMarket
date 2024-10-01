@@ -12,16 +12,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const product_model_1 = __importDefault(require("../../models/product.model"));
-const getAvailableProducts = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const mongoose_1 = __importDefault(require("mongoose"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    const mongoUri = process.env.MONGO_URI || '';
+    console.log("Connection string: " + mongoUri);
     try {
-        const result = yield product_model_1.default.find({});
-        res.status(200).json(result);
+        yield mongoose_1.default.connect(mongoUri);
+        console.log('MongoDB connected...');
     }
-    catch (error) {
-        console.log(error);
+    catch (err) {
+        console.error(err.message);
+        process.exit(1);
     }
 });
-exports.default = {
-    getAvailableProducts,
-};
+exports.default = connectDB;

@@ -14,9 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("./config/app"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const db_config_1 = __importDefault(require("./config/db.config"));
 dotenv_1.default.config();
 const port = process.env.PORT || 8000;
 app_1.default.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
     console.log(`now listening on port ${port}`);
-    // await connectDb(); 
+    yield (0, db_config_1.default)();
 }));
